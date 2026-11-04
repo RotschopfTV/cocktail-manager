@@ -1,0 +1,21 @@
+{
+  "name": "Cocktail Manager",
+  "short_name": "Cocktail Bar",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f4ef",
+  "theme_color": "#f5f4ef",
+  "description": "Deine persönliche Cocktail-Bar verwalten",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

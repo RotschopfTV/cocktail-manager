@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f4ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cocktail Manager">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Cocktail Manager</title>
+<style>
+:root{--bg:#f5f4ef;--card:#fff;--ink:#20251f;--muted:#777d73;--green:#536d52;--green2:#e8eee5;--line:#e8e8e1;--red:#b94b42;--amber:#a56a18;--shadow:0 8px 28px #29351b0c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+header{padding:25px 20px 16px;max-width:900px;margin:auto} .eyebrow{font-size:11px;letter-spacing:2px;color:var(--green);font-weight:800}.headrow{display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:29px;margin:5px 0 4px;letter-spacing:-.8px}h2{font-size:20px;margin:0 0 14px}h3{font-size:16px;margin:0}p{color:var(--muted);line-height:1.45;margin:5px 0}
+main{max-width:900px;margin:auto;padding:0 16px}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(130deg,#e7ede2,#f7f1e7);border-radius:22px;padding:20px;margin:8px 0 18px}.hero h2{font-size:23px;margin-bottom:5px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 22px}.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:var(--shadow)}.stat strong{display:block;font-size:24px;margin:6px 0}.stat span{font-size:12px;color:var(--muted)}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 10px;gap:10px}.btn{border:0;border-radius:12px;padding:11px 14px;background:var(--green);color:white;font-weight:700;font-size:14px;cursor:pointer}.btn.secondary{background:var(--green2);color:var(--green)}.btn.ghost{background:#f2f2ed;color:var(--ink)}.btn.danger{background:#faeae8;color:var(--red)}.btn.small{padding:8px 10px;font-size:12px}.list{display:grid;gap:9px}.item{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px}.itemmain{flex:1;min-width:0}.itemmain b{display:block}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{font-size:11px;border-radius:30px;padding:5px 8px;background:var(--green2);color:var(--green);font-weight:700;white-space:nowrap}.pill.low{background:#fff0dc;color:var(--amber)}.pill.miss{background:#faeae8;color:var(--red)}.tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 5px max(8px,env(safe-area-inset-bottom))}.tabs button{flex:1;max-width:150px;border:0;background:none;color:var(--muted);font-size:11px;padding:6px 2px;cursor:pointer}.tabs button.active{color:var(--green);font-weight:800}.tabs .ico{font-size:20px;display:block;margin-bottom:3px}.search,input,select,textarea{width:100%;border:1px solid #dedfd7;background:white;border-radius:11px;padding:12px;font:inherit;color:var(--ink);outline-color:var(--green)}label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:12px 0 5px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formcard{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}.formactions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.recipegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.recipe{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;cursor:pointer}.recipe .emoji{font-size:29px;margin-bottom:9px}.recipe p{font-size:12px}.recipe h3{margin-bottom:4px}.detail{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}.ingredientrow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.ingredientrow:last-child{border:0}.empty{text-align:center;color:var(--muted);padding:28px 12px;background:#fff;border:1px dashed #d8d9d0;border-radius:16px}.muted{color:var(--muted)}.hidden{display:none!important}.topactions{display:flex;gap:7px;flex-wrap:wrap}
+@media(min-width:650px){.recipegrid{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{max-width:580px}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">DEINE PERSÖNLICHE BAR</div><div class="headrow"><div><h1>Cocktail Manager</h1><p>Alles im Blick. Jeder Drink bereit.</p></div><div style="font-size:35px">🍸</div></div></header>
+<main>
+<section id="dashboard" class="page active">
+ <div class="hero"><div class="eyebrow">WILLKOMMEN ZURÜCK</div><h2>Was mixen wir heute?</h2><p>Verwalte deine Zutaten, entdecke Cocktails und behalte deinen Vorrat im Blick.</p><button class="btn" onclick="showPage('cocktails')">Cocktails entdecken →</button></div>
+ <div class="stats"><div class="stat"><span>Produkte</span><strong id="statProducts">0</strong><span>im Vorrat</span></div><div class="stat"><span>Rezepte</span><strong id="statRecipes">0</strong><span>in deiner Sammlung</span></div><div class="stat"><span>Fehlt / knapp</span><strong id="statLow">0</strong><span>Produkte</span></div></div>
+ <div class="sectionhead"><h2>Nachfüllen</h2><button class="btn secondary small" onclick="showPage('shopping')">Einkaufsliste</button></div><div id="lowList" class="list"></div>
+ <div class="sectionhead"><h2>Zuletzt hinzugefügt</h2><button class="btn secondary small" onclick="showPage('inventory')">Alle anzeigen</button></div><div id="recentList" class="list"></div>
+</section>
+<section id="inventory" class="page">
+ <div class="sectionhead"><h2>Mein Vorrat</h2><button class="btn" onclick="openIngredientForm()">＋ Produkt</button></div>
+ <input class="search" id="inventorySearch" placeholder="Zutat oder Produkt suchen…" oninput="renderInventory()">
+ <div style="height:12px"></div><div id="inventoryList" class="list"></div>
+ <div id="ingredientForm" class="formcard hidden">
+  <h2 id="ingredientFormTitle">Produkt hinzufügen</h2>
+  <input type="hidden" id="ingId">
+  <label>Name</label><input id="ingName" placeholder="z. B. Aperol">
+  <div class="grid2"><div><label>Kategorie</label><select id="ingCategory"><option>Spirituosen</option><option>Liköre</option><option>Säfte</option><option>Sirup</option><option>Mixer</option><option>Obst & Garnitur</option><option>Eis</option><option>Sonstiges</option></select></div><div><label>Einheit</label><select id="ingUnit"><option value="ml">ml</option><option value="cl">cl</option><option value="Stück">Stück</option><option value="g">g</option><option value="Blätter">Blätter</option><option value="TL">TL</option><option value="Flaschen">Flaschen</option></select></div></div>
+  <div class="grid2"><div><label>Gesamtmenge vorhanden</label><input id="ingQty" type="number" min="0" step="any" placeholder="700"></div><div><label>Flaschen / Packungen</label><input id="ingBottles" type="number" min="0" step="1" placeholder="1"></div></div>
+  <label>Mindestbestand (gleiche Einheit)</label><input id="ingMin" type="number" min="0" step="any" placeholder="150">
+  <div class="formactions"><button class="btn" onclick="saveIngredient()">Speichern</button><button class="btn ghost" onclick="closeIngredientForm()">Abbrechen</button></div>
+ </div>
+</section>
+<section id="cocktails" class="page">
+ <div class="sectionhead"><h2>Deine Cocktails</h2><button class="btn" onclick="openRecipeForm()">＋ Rezept</button></div>
+ <input class="search" id="recipeSearch" placeholder="Cocktail suchen…" oninput="renderCocktails()"><div style="height:12px"></div>
+ <div id="recipeGrid" class="recipegrid"></div><div id="recipeDetail"></div>
+ <div id="recipeForm" class="formcard hidden">
+  <h2 id="recipeFormTitle">Eigenes Rezept</h2><input type="hidden" id="recipeId">
+  <label>Name des Cocktails</label><input id="recipeName" placeholder="z. B. Berry Kiss">
+  <label>Beschreibung</label><input id="recipeDesc" placeholder="Fruchtig und frisch">
+  <label>Zutaten hinzufügen</label>
+  <div class="grid2"><select id="recipeIngSelect"></select><input id="recipeIngAmount" type="number" min="0" step="any" placeholder="Menge"></div>
+  <div class="formactions"><button class="btn secondary" onclick="addRecipeIngredient()">＋ Zutat übernehmen</button></div>
+  <div id="draftIngredients" class="detail"></div>
+  <label>Zubereitung</label><textarea id="recipeSteps" rows="3" placeholder="Alle Zutaten shaken und…"></textarea>
+  <div class="formactions"><button class="btn" onclick="saveRecipe()">Rezept speichern</button><button class="btn ghost" onclick="closeRecipeForm()">Abbrechen</button></div>
+ </div>
+</section>
+<section id="shopping" class="page">
+ <div class="sectionhead"><h2>Einkaufsliste</h2><button class="btn secondary small" onclick="addLowItems()">＋ Knappes ergänzen</button></div>
+ <div class="formcard"><label>Produkt</label><input id="shopName" placeholder="Was brauchst du?"><div class="grid2"><div><label>Menge</label><input id="shopQty" type="number" min="0" step="any" placeholder="1"></div><div><label>Einheit</label><select id="shopUnit"><option>Stück</option><option>Flaschen</option><option>ml</option><option>cl</option><option>g</option></select></div></div><div class="formactions"><button class="btn" onclick="addShopping()">Zur Liste hinzufügen</button></div></div>
+ <div id="shoppingList" class="list"></div>
+</section>
+<section id="settings" class="page">
+ <div class="sectionhead"><h2>Einstellungen & Daten</h2></div>
+ <div class="formcard"><h3>Datensicherung</h3><p>Exportiere deinen Vorrat, deine Rezepte und deine Einkaufsliste als JSON-Datei. So kannst du sie später wiederherstellen.</p><div class="formactions"><button class="btn" onclick="exportData()">Daten exportieren</button><label class="btn secondary" style="margin:0;cursor:pointer">Sicherung importieren<input type="file" accept="application/json" onchange="importData(event)" style="display:none"></label></div></div>
+ <div class="formcard"><h3>Über Cocktail Manager</h3><p>Deine Daten werden lokal in diesem Browser auf diesem iPhone gespeichert. Es gibt kein Konto und keine Cloud-Synchronisierung.</p><p><b>Tipp:</b> Exportiere regelmäßig eine Sicherung, besonders vor dem Löschen von Safari-Daten oder der App.</p></div>
+ <div class="formcard"><h3>Alle Daten löschen</h3><p>Entfernt Vorrat, Rezepte und Einkaufsliste von diesem Gerät.</p><button class="btn danger" onclick="resetAll()">Alle Daten löschen</button></div>
+</section>
+</main>
+<nav class="tabs">
+ <button class="active" data-page="dashboard" onclick="showPage('dashboard')"><span class="ico">⌂</span>Übersicht</button>
+ <button data-page="inventory" onclick="showPage('inventory')"><span class="ico">▤</span>Vorrat</button>
+ <button data-page="cocktails" onclick="showPage('cocktails')"><span class="ico">🍸</span>Cocktails</button>
+ <button data-page="shopping" onclick="showPage('shopping')"><span class="ico">🛒</span>Einkauf</button>
+ <button data-page="settings" onclick="showPage('settings')"><span class="ico">⚙</span>Mehr</button>
+</nav>
+<script>
+const KEY='cocktail-manager-local-v1';
+const starterInventory=[
+{name:'Weißer Rum',category:'Spirituosen',unit:'ml',qty:700,bottles:1,min:150},
+{name:'Wodka',category:'Spirituosen',unit:'ml',qty:1400,bottles:2,min:200},
+{name:'Gin',category:'Spirituosen',unit:'ml',qty:700,bottles:1,min:150},
+{name:'Limette',category:'Obst & Garnitur',unit:'Stück',qty:4,bottles:0,min:2},
+{name:'Minze',category:'Obst & Garnitur',unit:'Blätter',qty:24,bottles:0,min:8},
+{name:'Rohrzucker',category:'Sonstiges',unit:'TL',qty:20,bottles:0,min:4},
+{name:'Soda',category:'Mixer',unit:'ml',qty:500,bottles:1,min:100},
+{name:'Cola',category:'Mixer',unit:'ml',qty:1000,bottles:1,min:200},
+{name:'Triple Sec',category:'Liköre',unit:'ml',qty:350,bottles:1,min:80},
+{name:'Tequila',category:'Spirituosen',unit:'ml',qty:700,bottles:1,min:150},
+{name:'Limettensaft',category:'Säfte',unit:'ml',qty:250,bottles:1,min:50},
+{name:'Ananassaft',category:'Säfte',unit:'ml',qty:500,bottles:1,min:100}
+];
+const starterRecipes=[
+{name:'Mojito',emoji:'🌿',desc:'Frisch, minzig und spritzig.',ingredients:[['Weißer Rum',50,'ml'],['Limette',1,'Stück'],['Minze',8,'Blätter'],['Rohrzucker',2,'TL'],['Soda',100,'ml']],steps:'Limette und Zucker andrücken. Minze leicht anklatschen. Rum und Eis zugeben, mit Soda auffüllen und umrühren.'},
+{name:'Cuba Libre',emoji:'🥃',desc:'Rum, Cola und Limette.',ingredients:[['Weißer Rum',50,'ml'],['Cola',120,'ml'],['Limette',1,'Stück']],steps:'Rum und Limette über Eis geben, mit Cola auffüllen.'},
+{name:'Margarita',emoji:'🍋',desc:'Der mexikanische Klassiker.',ingredients:[['Tequila',50,'ml'],['Triple Sec',25,'ml'],['Limettensaft',25,'ml']],steps:'Alle Zutaten mit Eis shaken und in ein gekühltes Glas abseihen.'},
+{name:'Gin Tonic',emoji:'🍸',desc:'Einfach und erfrischend.',ingredients:[['Gin',50,'ml'],['Tonic Water',150,'ml']],steps:'Gin auf Eis geben, mit Tonic Water auffüllen.'},
+{name:'Screwdriver',emoji:'🍊',desc:'Wodka mit fruchtiger Note.',ingredients:[['Wodka',50,'ml'],['Orangensaft',120,'ml']],steps:'Zutaten auf Eis ins Glas geben und umrühren.'}
+];
+let data=load(),draft=[];
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{inventory:starterInventory,recipes:starterRecipes,shopping:[]}}catch(e){return {inventory:starterInventory,recipes:starterRecipes,shopping:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmt(n){return Number(n).toLocaleString('de-DE',{maximumFractionDigits:2})}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='inventory')renderInventory();if(id==='cocktails')renderCocktails();if(id==='shopping')renderShopping();window.scrollTo(0,0)}
+function getStock(name,unit){return data.inventory.find(x=>x.name.toLowerCase()===name.toLowerCase()&&x.unit===unit)}
+function available(ing){let x=getStock(ing[0],ing[2]);return x?x.qty:0}
+function missing(ing){return Math.max(0,ing[1]-available(ing))}
+function lowItems(){return data.inventory.filter(x=>x.qty<=x.min)}
+function renderAll(){renderDashboard();renderInventory();renderCocktails();renderShopping();fillRecipeSelect()}
+function renderDashboard(){document.getElementById('statProducts').textContent=data.inventory.length;document.getElementById('statRecipes').textContent=data.recipes.length;document.getElementById('statLow').textContent=lowItems().length;document.getElementById('lowList').innerHTML=lowItems().length?lowItems().map(x=>`<div class="item"><div class="itemmain"><b>${esc(x.name)}</b><div class="sub">${fmt(x.qty)} ${esc(x.unit)} · Mindestbestand ${fmt(x.min)}</div></div><span class="pill low">Knapp</span></div>`).join(''):'<div class="empty">Alles gut – aktuell ist nichts knapp. ✓</div>';document.getElementById('recentList').innerHTML=data.inventory.slice(-4).reverse().map(x=>`<div class="item"><div class="itemmain"><b>${esc(x.name)}</b><div class="sub">${esc(x.category)} · ${x.bottles} Flaschen</div></div><span class="pill">${fmt(x.qty)} ${esc(x.unit)}</span></div>`).join('')||'<div class="empty">Noch keine Produkte.</div>'}
+function openIngredientForm(item=null){document.getElementById('ingredientForm').classList.remove('hidden');document.getElementById('ingredientFormTitle').textContent=item?'Produkt bearbeiten':'Produkt hinzufügen';document.getElementById('ingId').value=item?data.inventory.indexOf(item):'';document.getElementById('ingName').value=item?.name||'';document.getElementById('ingCategory').value=item?.category||'Spirituosen';document.getElementById('ingUnit').value=item?.unit||'ml';document.getElementById('ingQty').value=item?.qty??'';document.getElementById('ingBottles').value=item?.bottles??'0';document.getElementById('ingMin').value=item?.min??'';document.getElementById('ingredientForm').scrollIntoView({behavior:'smooth'})}
+function closeIngredientForm(){document.getElementById('ingredientForm').classList.add('hidden')}
+function saveIngredient(){let name=document.getElementById('ingName').value.trim();if(!name)return alert('Bitte einen Namen eingeben.');let item={name,category:document.getElementById('ingCategory').value,unit:document.getElementById('ingUnit').value,qty:+document.getElementById('ingQty').value||0,bottles:+document.getElementById('ingBottles').value||0,min:+document.getElementById('ingMin').value||0};let i=document.getElementById('ingId').value;if(i!=='')data.inventory[+i]=item;else{let old=getStock(name,item.unit);if(old){old.qty+=item.qty;old.bottles+=item.bottles}else data.inventory.push(item)}closeIngredientForm();save()}
+function renderInventory(){let q=(document.getElementById('inventorySearch')?.value||'').toLowerCase();let rows=data.inventory.filter(x=>(x.name+' '+x.category).toLowerCase().includes(q));document.getElementById('inventoryList').innerHTML=rows.length?rows.map(x=>{let i=data.inventory.indexOf(x);return `<div class="item"><div class="itemmain"><b>${esc(x.name)}</b><div class="sub">${esc(x.category)} · ${x.bottles} Flaschen/Packungen · ${fmt(x.qty)} ${esc(x.unit)}</div></div><span class="pill ${x.qty<=x.min?'low':''}">${x.qty<=x.min?'Knapp':'Auf Lager'}</span><button class="btn secondary small" onclick="openIngredientForm(data.inventory[${i}])">✎</button><button class="btn ghost small" onclick="adjustStock(${i})">±</button><button class="btn danger small" onclick="deleteIngredient(${i})">×</button></div>`}).join(''):'<div class="empty">Keine Produkte gefunden.</div>'}
+function adjustStock(i){let x=data.inventory[i],v=prompt(`Neue Gesamtmenge für ${x.name} (${x.unit}):`,x.qty);if(v!==null&&!isNaN(+v)&&+v>=0){x.qty=+v;save()}}
+function deleteIngredient(i){if(confirm(`${data.inventory[i].name} wirklich löschen?`)){data.inventory.splice(i,1);save()}}
+function fillRecipeSelect(){let s=document.getElementById('recipeIngSelect');if(s)s.innerHTML=data.inventory.map(x=>`<option value="${esc(x.name)}|${esc(x.unit)}">${esc(x.name)} (${esc(x.unit)})</option>`).join('')+'<option value="__new__">＋ Neue Zutat anlegen…</option>'}
+function renderCocktails(){let q=(document.getElementById('recipeSearch')?.value||'').toLowerCase();let list=data.recipes.filter(r=>r.name.toLowerCase().includes(q));document.getElementById('recipeGrid').innerHTML=list.map((r)=>{let i=data.recipes.indexOf(r),miss=r.ingredients.filter(missing);return `<div class="recipe" onclick="showRecipe(${i})"><div class="emoji">${r.emoji||'🍹'}</div><h3>${esc(r.name)}</h3><p>${esc(r.desc||'Eigenes Rezept')}</p><span class="pill ${miss.length?'miss':''}">${miss.length?miss.length+' fehlt':'Alles vorhanden'}</span></div>`}).join('')||'<div class="empty">Noch keine Cocktails. Erstelle dein erstes Rezept!</div>'}
+function showRecipe(i){let r=data.recipes[i],miss=r.ingredients.filter(x=>missing(x)>0),ok=miss.length===0;document.getElementById('recipeDetail').innerHTML=`<div class="detail"><div class="sectionhead"><h2>${r.emoji||'🍹'} ${esc(r.name)}</h2><button class="btn ghost small" onclick="editRecipe(${i})">Bearbeiten</button></div><p>${esc(r.desc||'')}</p><h3 style="margin-top:16px">Zutaten-Abgleich</h3>${r.ingredients.map(x=>{let m=missing(x);return `<div class="ingredientrow"><span>${esc(x[0])}<br><small class="muted">Benötigt: ${fmt(x[1])} ${esc(x[2])}</small>${m?`<br><small style="color:var(--red)">Fehlt: ${fmt(m)} ${esc(x[2])}</small>`:''}</span><span class="pill ${m?'miss':' ' }">${m?'Fehlt':'Vorhanden'}</span></div>`}).join('')}<p style="margin-top:14px"><b>${ok?'Alles vorhanden – du kannst mixen!':'Das fehlt noch:'}</b> ${miss.map(x=>esc(x[0])).join(', ')}</p><div class="formactions"><button class="btn" onclick="addRecipeMissing(${i})">Fehlendes zur Einkaufsliste</button><button class="btn secondary" ${ok?'':'disabled'} onclick="makeCocktail(${i})">Cocktail zubereiten & abbuchen</button><button class="btn danger small" onclick="deleteRecipe(${i})">Löschen</button></div><h3 style="margin-top:18px">Zubereitung</h3><p>${esc(r.steps||'Keine Zubereitung eingetragen.')}</p></div>`;document.getElementById('recipeDetail').scrollIntoView({behavior:'smooth'})}
+function addRecipeMissing(i){let r=data.recipes[i],n=0;r.ingredients.forEach(x=>{let m=missing(x);if(m>0){let old=data.shopping.find(s=>s.name.toLowerCase()===x[0].toLowerCase()&&s.unit===x[2]);if(old)old.qty+=m;else data.shopping.push({name:x[0],qty:m,unit:x[2],checked:false});n++}});save();alert(n?`${n} fehlende Zutat(en) ergänzt.`:'Alles ist vorhanden!')}
+function makeCocktail(i){let r=data.recipes[i];if(r.ingredients.some(x=>missing(x)>0))return alert('Es fehlen Zutaten.');r.ingredients.forEach(x=>{let s=getStock(x[0],x[2]);if(s)s.qty=Math.max(0,s.qty-x[1])});save();showRecipe(i);alert('Cocktail verbucht – Vorrat wurde aktualisiert.')}
+function openRecipeForm(){draft=[];document.getElementById('recipeId').value='';['recipeName','recipeDesc','recipeSteps'].forEach(id=>document.getElementById(id).value='');document.getElementById('recipeFormTitle').textContent='Eigenes Rezept erstellen';document.getElementById('recipeForm').classList.remove('hidden');renderDraft();document.getElementById('recipeForm').scrollIntoView({behavior:'smooth'})}
+function editRecipe(i){let r=data.recipes[i];draft=JSON.parse(JSON.stringify(r.ingredients));document.getElementById('recipeId').value=i;document.getElementById('recipeName').value=r.name;document.getElementById('recipeDesc').value=r.desc||'';document.getElementById('recipeSteps').value=r.steps||'';document.getElementById('recipeFormTitle').textContent='Rezept bearbeiten';document.getElementById('recipeForm').classList.remove('hidden');renderDraft();document.getElementById('recipeForm').scrollIntoView({behavior:'smooth'})}
+function closeRecipeForm(){document.getElementById('recipeForm').classList.add('hidden')}
+function addRecipeIngredient(){let v=document.getElementById('recipeIngSelect').value;if(v==='__new__'){showPage('inventory');openIngredientForm();return}let [name,unit]=v.split('|'),amount=+document.getElementById('recipeIngAmount').value;if(!amount||amount<=0)return alert('Bitte eine gültige Menge eingeben.');draft.push([name,amount,unit]);document.getElementById('recipeIngAmount').value='';renderDraft()}
+function renderDraft(){document.getElementById('draftIngredients').innerHTML=draft.length?draft.map((x,i)=>`<div class="ingredientrow"><span>${esc(x[0])} · ${fmt(x[1])} ${esc(x[2])}</span><button class="btn danger small" onclick="draft.splice(${i},1);renderDraft()">Entfernen</button></div>`).join(''):'<p>Noch keine Zutaten hinzugefügt.</p>'}
+function saveRecipe(){let name=document.getElementById('recipeName').value.trim();if(!name)return alert('Bitte einen Cocktailnamen eingeben.');if(!draft.length)return alert('Bitte mindestens eine Zutat hinzufügen.');let r={name,emoji:'🍹',desc:document.getElementById('recipeDesc').value,ingredients:draft,steps:document.getElementById('recipeSteps').value};let id=document.getElementById('recipeId').value;if(id!=='')data.recipes[+id]=r;else data.recipes.push(r);closeRecipeForm();save();showPage('cocktails')}
+function deleteRecipe(i){if(confirm('Rezept wirklich löschen?')){data.recipes.splice(i,1);document.getElementById('recipeDetail').innerHTML='';save()}}
+function addShopping(){let name=document.getElementById('shopName').value.trim(),qty=+document.getElementById('shopQty').value||1,unit=document.getElementById('shopUnit').value;if(!name)return alert('Bitte Produkt eingeben.');data.shopping.push({name,qty,unit,checked:false});document.getElementById('shopName').value='';document.getElementById('shopQty').value='';save()}
+function addLowItems(){let n=0;lowItems().forEach(x=>{if(!data.shopping.some(s=>s.name.toLowerCase()===x.name.toLowerCase()&&!s.checked)){data.shopping.push({name:x.name,qty:1,unit:'Packungen',checked:false});n++}});save();alert(`${n} Produkt(e) ergänzt.`)}
+function renderShopping(){document.getElementById('shoppingList').innerHTML=data.shopping.length?data.shopping.map((x,i)=>`<div class="item"><input type="checkbox" style="width:22px;height:22px;accent-color:var(--green)" ${x.checked?'checked':''} onchange="data.shopping[${i}].checked=this.checked;save()"><div class="itemmain"><b style="${x.checked?'text-decoration:line-through;color:#999':''}">${esc(x.name)}</b><div class="sub">${fmt(x.qty)} ${esc(x.unit)}</div></div><button class="btn danger small" onclick="data.shopping.splice(${i},1);save()">×</button></div>`).join(''):'<div class="empty">Deine Einkaufsliste ist leer.</div>'}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cocktail-manager-sicherung.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let d=JSON.parse(reader.result);if(!Array.isArray(d.inventory)||!Array.isArray(d.recipes)||!Array.isArray(d.shopping))throw 0;data=d;save();alert('Sicherung erfolgreich importiert.')}catch(_){alert('Die Datei ist keine gültige Cocktail-Manager-Sicherung.')}};reader.readAsText(f)}
+function resetAll(){if(confirm('Wirklich alle Daten löschen?')){data={inventory:[],recipes:[],shopping:[]};save()}}
+renderAll();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
